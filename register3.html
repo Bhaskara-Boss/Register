@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="regi3.css">
+</head>
+<body>
+    <div class="form-container">
+        <form id="seedForm">
+            <div class="form-group">
+                <label for="seeds">Select Seeds:</label>
+                <select id="seeds" name="seeds">
+                    <option value="">Choose a seed type</option>
+                    <option value="Tomato">Tomato</option>
+                    <option value="Paddy">Paddy</option>
+                    <option value="Corn">Corn</option>
+                    <option value="Sunflower">Sunflower</option>
+                    <option value="Cotton">Cotton</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantity in Grams:</label>
+                <input type="number" id="quantity" name="quantity" min="1" placeholder="Enter quantity" required>
+            </div>
+
+            <div class="form-group">
+                <label for="district">Select District:</label>
+                <select id="district" name="district">
+                    <option value="">Select a district</option>
+                    <option value="bangalore">Bangalore</option>
+                    <option value="mysore">Mysore</option>
+                    <!-- Add other districts here -->
+                </select>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('seedForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const seed = document.getElementById('seeds').value;
+            const quantity = document.getElementById('quantity').value;
+            const district = document.getElementById('district').value;
+
+            // Simulate seed selection process
+            if (seed && quantity && district) {
+                alert('Seed selection successful!');
+                // Redirect to another page or confirm selection
+                window.location.href = 'confirmation.html'; // Redirect to a confirmation page, for example
+            } else {
+                alert('Please fill in all the fields.');
+            }
+        });
+    </script>
+</body>
+</html>

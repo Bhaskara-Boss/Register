@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="regi1.css">
+</head>
+<body>
+    <div class="registration-container">
+        <div class="registration-header">
+            <h1>Registration Form</h1>
+            <p>Please fill in your details</p>
+        </div>
+        <form id="registrationForm" action="/register" method="POST">
+            <div class="form-group">
+                <label for="name" class="required-field">Full Name</label>
+                <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    required 
+                    placeholder="Enter your full name"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="contact" class="required-field">Contact Number</label>
+                <input 
+                    type="tel" 
+                    id="contact" 
+                    name="contact" 
+                    required 
+                    placeholder="Enter your contact number"
+                    pattern="[0-9]{10}"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="required-field">Email Address</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    required 
+                    placeholder="Enter your email address"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="address" class="required-field">Address</label>
+                <textarea 
+                    id="address" 
+                    name="address" 
+                    required 
+                    placeholder="Enter your full address"
+                ></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="license" class="required-field">License Number</label>
+                <input 
+                    type="text" 
+                    id="license" 
+                    name="license" 
+                    required 
+                    placeholder="Enter your license number"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="required-field">New Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    required 
+                    placeholder="Enter your password"
+                >
+                <div class="password-requirements">
+                    Password must be at least 8 characters long and include numbers and letters
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword" class="required-field">Confirm Password</label>
+                <input 
+                    type="password" 
+                    id="confirmPassword" 
+                    name="confirmPassword" 
+                    required 
+                    placeholder="Confirm your password"
+                >
+                <div class="error-message" id="passwordError"></div>
+            </div>
+
+            <button type="submit" class="submit-button">Register</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const passwordError = document.getElementById('passwordError');
+
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                passwordError.style.display = 'block';
+                passwordError.textContent = 'Passwords do not match';
+            } else if (password.length < 8) {
+                e.preventDefault();
+                passwordError.style.display = 'block';
+                passwordError.textContent = 'Password must be at least 8 characters long';
+            } else {
+                passwordError.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

